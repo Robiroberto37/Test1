@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 Decembrie - Ziua Națională a României</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Pagina de bun venit */
+        #welcome {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #002B7F 0%, #FCD116 50%, #CE1126 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #welcome::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 33.33%;
+            top: 0;
+            background: #002B7F;
+            z-index: 1;
+        }
+
+        #welcome::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 33.33%;
+            bottom: 0;
+            background: #CE1126;
+            z-index: 1;
+        }
+
+        .welcome-content {
+            z-index: 2;
+            text-align: center;
+            color: white;
+            padding: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            animation: fadeIn 1.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .welcome-content h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+        }
+
+        .welcome-content p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+        }
+
+        .enter-btn {
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: #FCD116;
+            color: #002B7F;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .enter-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        /* Container principal */
+        #main-content {
+            display: none;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #002B7F, #FCD116, #CE1126);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Navigare */
+        nav {
+            background: #002B7F;
+            padding: 15px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .nav-btn {
+            padding: 12px 25px;
+            background: #FCD116;
+            color: #002B7F;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .nav-btn:hover {
+            background: #CE1126;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn.active {
+            background: #CE1126;
+            color: white;
+        }
+
+        /* Secțiuni */
+        .section {
+            display: none;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 60vh;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section h2 {
+            color: #002B7F;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            border-bottom: 4px solid #FCD116;
+            padding-bottom: 10px;
+        }
+
+        .section p {
+            line-height: 1.8;
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .section ul {
+            margin-left: 30px;
+            line-height: 2;
+        }
+
+        .section li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Galerie foto */
+        .gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin-top: 30px;
+            align-items: center;
+        }
+
+        .gallery-item {
+            width: 100%;
+            max-width: 600px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .gallery-caption {
+            background: #002B7F;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 1.1em;
+        }
+
+        .gallery-description {
+            padding: 15px;
+            text-align: center;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Video */
+        .video-container {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .video-container iframe {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Quiz */
+        .quiz-container {
+            background: #f5f5f5;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .quiz-name-input {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .quiz-name-input input {
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #002B7F;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .quiz-name-input label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+            color: #002B7F;
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border-left: 5px solid #002B7F;
+        }
+
+        .question h3 {
+            color: #002B7F;
+            margin-bottom: 15px;
+        }
+
+        .option {
+            padding: 12px;
+            margin: 8px 0;
+            background: #e8e8e8;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .option:hover {
+            background: #FCD116;
+        }
+
+        .option.correct {
+            background: #4CAF50;
+            color: white;
+        }
+
+        .option.wrong {
+            background: #CE1126;
+            color: white;
+        }
+
+        .quiz-result {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 20px;
+            padding: 20px;
+            background: #002B7F;
+            color: white;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .finish-quiz-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            background: #CE1126;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .finish-quiz-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        }
+
+        .results-list {
+            margin-top: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .results-list h3 {
+            color: #002B7F;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .result-item {
+            padding: 10px;
+            margin: 10px 0;
+            background: #f0f0f0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .result-item.new-result {
+            animation: highlight 1s ease-in-out;
+        }
+
+        @keyframes highlight {
+            0%, 100% { background: #f0f0f0; }
+            50% { background: #FCD116; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-content h1 {
+                font-size: 2.5em;
+            }
+
+            .welcome-content p {
+                font-size: 1.2em;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            .nav-btn {
+                width: 100%;
+            }
+
+            .section h2 {
+                font-size: 2em;
+            }
+
+            .gallery-item img {
+                height: 300px;
+            }
+
+            .video-container iframe {
+                height: 250px;
+            }
+
+            .person-card img {
+                width: 150px;
+                height: 200px;
+            }
+        }
+
+        /* Card persoane */
+        .person-card {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #CE1126;
+            text-align: center;
+        }
+
+        .person-card img {
+            width: 200px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .person-card h3 {
+            color: #002B7F;
+            margin-bottom: 10px;
+        }
+
+        .person-card p {
+            text-align: center;
+        }
+
+        /* Footer */
+        footer {
+            background: #002B7F;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Pagina de bun venit -->
+    <div id="welcome">
+        <div class="welcome-content">
+            <h1>🇷🇴 1 DECEMBRIE 🇷🇴</h1>
+            <p>Ziua Națională a României</p>
+            <p>Marea Unire - 1918</p>
+            <button class="enter-btn" onclick="enterSite()">Intră pe site</button>
+        </div>
+    </div>
+
+    <!-- Conținut principal -->
+    <div id="main-content">
+        <header>
+            <h1>🇷🇴 1 Decembrie - Ziua Națională a României 🇷🇴</h1>
+        </header>
+
+        <nav>
+            <button class="nav-btn active" onclick="showSection('evenimente')">Evenimente Antecedente</button>
+            <button class="nav-btn" onclick="showSection('context')">Contextul Istoric</button>
+            <button class="nav-btn" onclick="showSection('unire')">Ce a dus la Unire</button>
+            <button class="nav-btn" onclick="showSection('persoane')">Personalități</button>
+            <button class="nav-btn" onclick="showSection('media')">Foto & Video</button>
+            <button class="nav-btn" onclick="showSection('cronologie')">Cronologie</button>
+            <button class="nav-btn" onclick="showSection('quiz')">Quiz</button>
+        </nav>
+
+        <!-- Secțiunea Evenimente Antecedente -->
+        <div id="evenimente" class="section active">
+            <h2>Evenimente Antecedente</h2>
+            <p>Marea Unire din 1918 nu a fost un eveniment izolat, ci culminația unui lung proces istoric de luptă pentru unitatea națională a românilor.</p>
+            
+            <h3 style="color: #CE1126; margin-top: 30px;">Evenimente importante:</h3>
+            <ul>
+                <li><strong>1600</strong> - Mihai Viteazul realizează pentru prima dată unirea politică a Țării Românești, Moldovei și Transilvaniei</li>
+                <li><strong>1848</strong> - Revoluția din 1848 în toate provinciile românești, cu idealuri de unire și independență</li>
+                <li><strong>24 Ianuarie 1859</strong> - Unirea Principatelor Române (Moldova și Țara Românească) sub Alexandru Ioan Cuza</li>
+                <li><strong>1877</strong> - România își proclamă independența față de Imperiul Otoman</li>
+                <li><strong>1881</strong> - România devine regat, Carol I devine primul rege al României</li>
+                <li><strong>1916</strong> - România intră în Primul Război Mondial de partea Antantei</li>
+            </ul>
+        </div>
+
+        <!-- Secțiunea Context Istoric -->
+        <div id="context" class="section">
+            <h2>Contextul Istoric</h2>
+            <p>La începutul secolului XX, România era un regat independent, dar românii erau împărțiți în mai multe state. Transilvania, Banatul, Crișana și Maramureșul făceau parte din Imperiul Austro-Ungar, Basarabia era sub stăpânire rusă, iar Bucovina aparținea Austriei.</p>
+            
+            <p>Primul Război Mondial (1914-1918) a schimbat harta Europei. Imperiile centrale (Germania, Austro-Ungaria, Imperiul Otoman) au fost învinse, iar imperiile multinationale au început să se destrame.</p>
+            
+            <p>Românii din toate provinciile au văzut în acest moment istoric o oportunitate unică de a-și realiza visul de veacuri: unirea tuturor românilor într-un singur stat național.</p>
+            
+            <h3 style="color: #CE1126; margin-top: 30px;">Factori determinanți:</h3>
+            <ul>
+                <li>Destrămarea Imperiului Austro-Ungar</li>
+                <li>Victoria Antantei în Primul Război Mondial</li>
+                <li>Principiul autodeterminării națiunilor promovat de președintele american Woodrow Wilson</li>
+                <li>Mișcarea națională românească din Transilvania</li>
+                <li>Sacrificiul românilor în Primul Război Mondial</li>
+            </ul>
+        </div>
+
+        <!-- Secțiunea Ce a dus la Unire -->
+        <div id="unire" class="section">
+            <h2>Ce a dus la Marea Unire</h2>
+            <p>Unirea din 1 Decembrie 1918 a fost rezultatul mai multor factori istorici, politici și sociale:</p>
+            
+            <div class="person-card">
+                <h3>1. Conștiința națională</h3>
+                <p>De-a lungul secolului al XIX-lea, românii din toate provinciile au dezvoltat o puternică conștiință națională, bazată pe limba comună, tradiții și istorie.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>2. Participarea în Primul Război Mondial</h3>
+                <p>România a intrat în război în 1916 cu scopul de a elibera Transilvania. Deși a suferit înfrângeri inițiale, sacrificiul soldaților români a legitimat revendicările teritoriale.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>3. Adunările Naționale</h3>
+                <p>În 1918 au avut loc trei adunări istorice care au hotărât unirea cu România:
+                    <br>• 27 martie 1918 - Unirea Basarabiei
+                    <br>• 15 noiembrie 1918 - Unirea Bucovinei
+                    <br>• 1 decembrie 1918 - Unirea Transilvaniei, Banatului, Crișanei și Maramureșului</p>
+            </div>
+
+            <div class="person-card">
+                <h3>4. Sprijinul internațional</h3>
+                <p>Victoria Antantei și principiile wilsoniene privind dreptul popoarelor la autodeterminare au creat un context internațional favorabil unirii.</p>
+            </div>
+        </div>
+
+        <!-- Secțiunea Personalități -->
+        <div id="persoane" class="section">
+            <h2>Personalități care au contribuit la Marea Unire</h2>
+            
+            <div class="person-card">
+                <h3>👑 Regele Ferdinand I (1865-1927)</h3>
+                <p>Regele României între 1914-1927, supranumit "Regele Întregitor". A condus țara în timpul Primului Război Mondial și a fost martorul unirii tuturor provinciilor românești.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>👑 Regina Maria (1875-1938)</h3>
+                <p>Soția regelui Ferdinand, a avut un rol important în susținerea cauzei românești pe plan internațional și în ridicarea moralului trupelor în timpul războiului.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>📜 Iuliu Maniu (1873-1953)</h3>
+                <p>Politician și lider al românilor din Transilvania, președintele Consiliului Dirigent al Transilvaniei. A fost unul dintre principalii organizatori ai Adunării de la Alba Iulia.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>⚖️ Vasile Goldiș (1862-1934)</h3>
+                <p>Unul dintre liderii Marii Adunări Naționale de la Alba Iulia, a fost membru în Consiliul Dirigent și a contribuit la organizarea administrativă a Transilvaniei unite cu România.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>✍️ Ioan Rațiu (1828-1902)</h3>
+                <p>Politician și avocat, a luptat pentru drepturile românilor din Transilvania și a fost un precursor al ideii de unire națională.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>📖 Gheorghe Pop de Băsești (1835-1919)</h3>
+                <p>Președintele Marii Adunări Naționale de la Alba Iulia din 1 decembrie 1918, simbolul continuității luptei pentru drepturi naționale.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>🎓 Alexandru Vaida-Voevod (1872-1950)</h3>
+                <p>Politician român, a citit Declarația de Unire în Parlamentul de la Budapesta pe 18 octombrie 1918, anunțând intențiile românilor transilvăneni.</p>
+            </div>
+        </div>
+
+        <!-- Secțiunea Media -->
+        <div id="media" class="section">
+            <h2>Galerie Foto & Video</h2>
+            
+            <h3 style="color: #002B7F;">Fotografii Istorice</h3>
+            <div class="gallery">
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/Alba_Iulia_1_decembrie_1918.jpg/800px-Alba_Iulia_1_decembrie_1918.jpg" alt="Adunarea de la Alba Iulia">
+                    <div class="gallery-caption">Adunarea de la Alba Iulia - 1 Decembrie 1918</div>
+                    <div class="gallery-description">Peste 100.000 de români s-au adunat la Alba Iulia pentru a proclama Marea Unire. Această fotografie istorică surprinde momentul crucial când Transilvania, Banatul, Crișana și Maramureșul s-au unit cu România.</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/33/Ferdinand_of_Romania.jpg/400px-Ferdinand_of_Romania.jpg" alt="Regele Ferdinand">
+                    <div class="gallery-caption">Regele Ferdinand I - Regele Întregitor</div>
+                    <div class="gallery-description">Ferdinand I a fost regele României în timpul Marii Uniri. Sub domnia sa, România și-a dublat teritoriul și populația, devenind România Mare. A fost supranumit "Regele Întregitor" pentru acest rol decisiv în istoria națională.</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Queen_Marie_of_Romania.jpg/400px-Queen_Marie_of_Romania.jpg" alt="Regina Maria">
+                    <div class="gallery-caption">Regina Maria a României</div>
+                    <div class="gallery-description">Regina Maria a fost un simbol al rezistenței românești în timpul Primului Război Mondial. A vizitat spitalele militare, a susținut moralul trupelor și a avut un rol diplomatic important în recunoașterea internațională a Marii Uniri.</div>
+                </div>
+                
+                <div class="gallery-item">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Iuliu_Maniu.jpg/400px-Iuliu_Maniu.jpg" alt="Iuliu Maniu">
+                    <div class="gallery-caption">Iuliu Maniu - Lider al Unirii</div>
+                    <div class="gallery-description">Iuliu Maniu a fost unul dintre principalii organizatori ai Adunării Naționale de la Alba Iulia. A fost președintele Consiliului Dirigent al Transilvaniei și a jucat un rol crucial în procesul unirii și în organizarea administrativă a provinciilor unite.</div>
+                </div>
+            </div>
+
+            <div class="video-container">
+                <h3 style="color: #002B7F; margin-bottom: 20px;">Video Documentar</h3>
+                <iframe src="https://www.youtube.com/embed/wQN_FLXIcb4" title="1 Decembrie Ziua Nationala a Romaniei" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <p style="margin-top: 20px; font-style: italic;">Documentar despre Marea Unire din 1918</p>
+            </div>
+        </div>
+
+        <!-- Secțiunea Cronologie -->
+        <div id="cronologie" class="section">
+            <h2>Cronologia Unirii - 1918</h2>
+            
+            <div class="person-card">
+                <h3>📅 27 Martie 1918</h3>
+                <p><strong>Unirea Basarabiei cu România</strong> - Sfatul Țării din Chișinău votează unirea cu România cu 86 de voturi pentru, 3 împotrivă și 36 abțineri.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>📅 15 Noiembrie 1918</h3>
+                <p><strong>Unirea Bucovinei cu România</strong> - Congresul General al Bucovinei de la Cernăuți proclamă unirea cu Regatul României.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>📅 1 Decembrie 1918</h3>
+                <p><strong>Marea Unire de la Alba Iulia</strong> - Peste 100.000 de români se adună la Alba Iulia pentru a hotărî unirea Transilvaniei, Banatului, Crișanei și Maramureșului cu România. Adunarea Națională adoptă Rezoluția de Unire cu 1.228 de voturi pentru, 0 împotrivă.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>📅 24 Decembrie 1918</h3>
+                <p><strong>Unirea Bucovinei ratificată</strong> - Decretul de unire a Bucovinei este promulgat oficial.</p>
+            </div>
+
+            <div class="person-card">
+                <h3>📅 1919-1920</h3>
+                <p><strong>Recunoașterea internațională</strong> - Tratatele de pace de la Paris recunosc unirea provinciilor cu România. România Mare devine o realitate recunoscută internațional.</p>
+            </div>
+        </div>
+
+        <!-- Secțiunea Quiz -->
+        <div id="quiz" class="section">
+            <h2>Quiz - Testează-ți cunoștințele!</h2>
+            
+            <div class="quiz-container">
+                <div class="quiz-name-input">
+                    <label for="userName">Introdu numele tău:</label>
+                    <input type="text" id="userName" placeholder="Numele tău aici..." required>
+                </div>
+
+                <div class="question" id="q1">
+                    <h3>1. În ce an a avut loc Marea Unire?</h3>
+                    <div class="option" onclick="selectAnswer(this, false, 'q1')">1916</div>
+                    <div class="option" onclick="selectAnswer(this, true, 'q1')">1918</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q1')">1920</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q1')">1922</div>
+                </div>
+
+                <div class="question" id="q2">
+                    <h3>2. Unde a avut loc Adunarea Națională din 1 Decembrie 1918?</h3>
+                    <div class="option" onclick="selectAnswer(this, false, 'q2')">București</div>
+                    <div class="option" onclick="selectAnswer(this, true, 'q2')">Alba Iulia</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q2')">Iași</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q2')">Cluj</div>
+                </div>
+
+                <div class="question" id="q3">
+                    <h3>3. Cine a fost regele României în timpul Marii Uniri?</h3>
+                    <div class="option" onclick="selectAnswer(this, false, 'q3')">Carol I</div>
+                    <div class="option" onclick="selectAnswer(this, true, 'q3')">Ferdinand I</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q3')">Carol II</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q3')">Mihai I</div>
+                </div>
+
+                <div class="question" id="q4">
+                    <h3>4. Câți oameni au participat la Adunarea de la Alba Iulia?</h3>
+                    <div class="option" onclick="selectAnswer(this, false, 'q4')">Circa 10.000</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q4')">Circa 50.000</div>
+                    <div class="option" onclick="selectAnswer(this, true, 'q4')">Peste 100.000</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q4')">Circa 200.000</div>
+                </div>
+
+                <div class="question" id="q5">
+                    <h3>5. Care dintre aceste provincii s-a unit cu România în 27 martie 1918?</h3>
+                    <div class="option" onclick="selectAnswer(this, true, 'q5')">Basarabia</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q5')">Transilvania</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q5')">Bucovina</div>
+                    <div class="option" onclick="selectAnswer(this, false, 'q5')">Banatul</div>
+                </div>
+
+                <button class="finish-quiz-btn" onclick="finishQuiz()">Finalizează Quiz-ul</button>
+
+                <div class="quiz-result" id="quiz-result"></div>
+
+                <div class="results-list" id="results-list" style="display: none;">
+                    <h3>📊 Rezultate în Timp Real</h3>
+                    <div id="all-results"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>🇷🇴 Trăiască România! 🇷🇴</p>
+            <p>© 2024 - Dedicat Zilei Naționale a României</p>
+        </footer>
+    </div>
+
+    <script>
+        let userAnswers = {};
+        let quizResults = [];
+
+        function enterSite() {
+            document.getElementById('welcome').style.display = 'none';
+            document.getElementById('main-content').style.display = 'block';
+        }
+
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            document.getElementById(sectionId).classList.add('active');
+
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectAnswer(element, isCorrect, questionId) {
+            const question = document.getElementById(questionId);
+            
+            if (question.classList.contains('answered')) {
+                return;
+            }
+
+            const options = question.querySelectorAll('.option');
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+
+            userAnswers[questionId] = isCorrect;
+
+            if (isCorrect) {
+                element.classList.add('correct');
+            } else {
+                element.classList.add('wrong');
+                options.forEach(opt => {
+                    if (opt.onclick.toString().includes('true')) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+
+            question.classList.add('answered');
+        }
+
+        async function finishQuiz() {
+            const userName = document.getElementById('userName').value.trim();
+            
+            if (!userName) {
+                alert('Te rog introdu numele tău înainte de a finaliza quiz-ul!');
+                document.getElementById('userName').focus();
+                return;
+            }
+
+            const answeredCount = Object.keys(userAnswers).length;
+            if (answeredCount < 5) {
+                alert('Te rog răspunde la toate întrebările înainte de a finaliza!');
+                return;
+            }
+
+            const score = Object.values(userAnswers).filter(answer => answer === true).length;
+            const totalQuestions = 5;
+            const percentage = (score / totalQuestions) * 100;
+
+            let message = '';
+            if (percentage === 100) {
+                message = '🎉 Perfect! Ești un adevărat expert în istoria României!';
+            } else if (percentage >= 80) {
+                message = '👏 Foarte bine! Cunoști foarte bine istoria Marii Uniri!';
+            } else if (percentage >= 60) {
+                message = '👍 Bine! Mai ai câteva lucruri de învățat despre Marea Unire.';
+            } else {
+                message = '📚 Mai citește despre Marea Unire pentru a-ți îmbunătăți cunoștințele!';
+            }
+
+            const resultDiv = document.getElementById('quiz-result');
+            resultDiv.innerHTML = `
+                <h3>${userName}, scorul tău: ${score}/${totalQuestions} (${percentage}%)</h3>
+                <p>${message}</p>
+            `;
+            resultDiv.style.display = 'block';
+
+            const result = {
+                name: userName,
+                score: score,
+                total: totalQuestions,
+                percentage: percentage,
+                timestamp: new Date().toLocaleString('ro-RO')
+            };
+
+            try {
+                await window.storage.set(`quiz_result_${Date.now()}`, JSON.stringify(result), true);
+                await loadResults();
+            } catch (error) {
+                console.log('Rezultatele sunt salvate local');
+                quizResults.push(result);
+                displayResults();
+            }
+
+            document.querySelector('.finish-quiz-btn').style.display = 'none';
+        }
+
+        async function loadResults() {
+            try {
+                const keys = await window.storage.list('quiz_result_', true);
+                quizResults = [];
+                
+                if (keys && keys.keys) {
+                    for (const key of keys.keys) {
+                        try {
+                            const data = await window.storage.get(key, true);
+                            if (data && data.value) {
+                                quizResults.push(JSON.parse(data.value));
+                            }
+                        } catch (e) {
+                            console.log('Eroare la citirea rezultatului:', e);
+                        }
+                    }
+                }
+                
+                displayResults();
+            } catch (error) {
+                console.log('Folosim salvare locală');
+                displayResults();
+            }
+        }
+
+        function displayResults() {
+            const resultsContainer = document.getElementById('all-results');
+            const resultsList = document.getElementById('results-list');
+            
+            if (quizResults.length === 0) {
+                return;
+            }
+
+            resultsList.style.display = 'block';
+            
+            quizResults.sort((a, b) => b.percentage - a.percentage);
+            
+            resultsContainer.innerHTML = quizResults.map((result, index) => {
+                const isNew = index === quizResults.length - 1;
+                return `
+                    <div class="result-item ${isNew ? 'new-result' : ''}">
+                        <span><strong>${result.name}</strong> - ${result.score}/${result.total} (${result.percentage}%)</span>
+                        <span style="font-size: 0.9em; color: #666;">${result.timestamp}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.addEventListener('load', loadResults);
+    </script>
+</body>
+</html>
